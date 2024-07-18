@@ -1,6 +1,7 @@
 import {SectionWrapper} from './SectionWrapper.jsx';
 import {SCHEMES, WORKOUTS} from '../utils/swoldier.js';
 import {useState} from 'react';
+import {Button} from './Button.jsx';
 
 
 export const Header = (props) => {
@@ -16,11 +17,9 @@ export const Header = (props) => {
     )
 }
 
-export const Generator = () => {
+export const Generator = (props) => {
     const [showModal, setShowModal] = useState(false);
-    const [poison, setPoison] = useState('individual');
-    const [muscles, setMuscles] = useState([]);
-    const [goals, setGoals] = useState('strength_power');
+    const  {poison, muscles, goals, setPoison, setGoals, setMuscles, updatedWorkout} = props
     const toggleModal = () => {
         setShowModal(!showModal)
     }
@@ -61,10 +60,10 @@ export const Generator = () => {
                     return (
                         <button
                             onClick={() => {
-                                setMuscles([])
                                 setPoison(type)
+                                setMuscles([])
                             }}
-                            className={"bg-slate-950 border py-3 rounded-lg duration-200 hover:border-blue-600 " + (type === poison ? 'border-blue-600' : 'border-blue-400')}
+                            className={"bg-slate-950 border py-3 px-4 rounded-lg duration-200 hover:border-blue-600 " + (type === poison ? 'border-blue-600' : 'border-blue-400')}
                             key={typeIndex} >
                             <p className="capitalize" >{type.replaceAll('_', ' ')}</p >
                         </button >
@@ -107,7 +106,7 @@ export const Generator = () => {
                 index={'03'}
                 title={'Become Juggernaut'}
                 description={'Selected your ultimate objected'} />
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-4" >
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4" >
                 {Object.keys(SCHEMES).map((scheme, schemeIndex) => {
                     return (
                         <button
@@ -121,6 +120,7 @@ export const Generator = () => {
                     )
                 })}
             </div >
+            <Button func={updatedWorkout} text={'Formulate'} />
         </SectionWrapper >
     )
 }

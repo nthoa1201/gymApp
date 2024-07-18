@@ -1,7 +1,8 @@
-export const Workout = () => {
+export const Workout = (props) => {
+    const {workout} = props
     return (
-        <>
-        workout
-        </>
+        <div>
+            {workout}
+        </div>
     )
 }
