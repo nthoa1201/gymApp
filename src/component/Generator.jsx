@@ -1,5 +1,5 @@
 import {SectionWrapper} from './SectionWrapper.jsx';
-import {WORKOUTS} from '../utils/swoldier.js';
+import {SCHEMES, WORKOUTS} from '../utils/swoldier.js';
 import {useState} from 'react';
 
 
@@ -24,6 +24,29 @@ export const Generator = () => {
     const toggleModal = () => {
         setShowModal(!showModal)
     }
+
+    const updateMuscle = (muscleGroup) => {
+        if (muscles.includes(muscleGroup)) {
+            setMuscles(muscles.filter(val => val !== muscleGroup))
+            return;
+        }
+
+        if (muscles.length > 3) {
+            return
+        }
+
+        if (poison !== 'individual') {
+            setMuscles([muscleGroup])
+            setShowModal(false)
+            return;
+        }
+
+        if (muscles.length === 3) {
+            setShowModal(false)
+        }
+
+        setMuscles([...muscles, muscleGroup])
+    }
     return (
         <SectionWrapper
             header={"generate your workout"}
@@ -37,7 +60,12 @@ export const Generator = () => {
                 {Object.keys(WORKOUTS).map((type, typeIndex) => {
                     return (
                         <button
-                            className="bg-slate-950 border border-blue-400 py-4 rounded-lg duration-200 hover:border-blue-600"
+                            onClick={() => {
+
+                                setPoison(type)
+                                console.log(type === poison ? 'border-blue-600' : 'border-blue-400')
+                            }}
+                            className={"bg-slate-950 border py-3 rounded-lg duration-200 hover:border-blue-600 " + (type === poison ? 'border-blue-600' : 'border-blue-400')}
                             key={typeIndex} >
                             <p className="capitalize" >{type.replaceAll('_', ' ')}</p >
                         </button >
@@ -50,16 +78,49 @@ export const Generator = () => {
                 title={'Lock on target'}
                 description={'Selected the muscles judged  for annihilation.'} />
             <div className="bg-slate-950  border border-solid  border-blue-400 rounded-lg flex flex-col" >
-                <button onClick={toggleModal} className="relative flex p-3 items-center justify-center" >
+                <button
+                    onClick={toggleModal}
+                    className="relative flex p-3 items-center justify-center" >
                     <p >Select muscle group</p >
                     <i className="fa-solid fa-caret-down absolute right-3 top-1/2 -translate-y-1/2" ></i >
                 </button >
                 {showModal && (
-                    <div>
-                        modal
-                    </div>
+                    <div className="flex flex-col px-3 pb-4 duration-400" >
+                        {(poison === 'individual' ? WORKOUTS[poison] : Object.keys(WORKOUTS[poison])).map((musclesGroup, musclesGroupIndex) => {
+                            return (
+                                <button
+                                    key={musclesGroupIndex}
+                                    className={"hover:text-blue-400 duration-200" + (muscles.includes(musclesGroup) ? ' text-blue-400' : '')}
+                                    onClick={() => {
+                                        updateMuscle(musclesGroup)
+                                    }} >
+                                    <p className="uppercase py-1" >
+                                        {musclesGroup.replaceAll('_', ' ')}
+                                    </p >
+                                </button >
+                            )
+                        })}
+                    </div >
                 )}
+            </div >
 
+            <Header
+                index={'03'}
+                title={'Become Juggernaut'}
+                description={'Selected your ultimate objected'} />
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-4" >
+                {Object.keys(SCHEMES).map((scheme, schemeIndex) => {
+                    return (
+                        <button
+                            onClick={() => {
+                                setGoals(scheme)
+                            }}
+                            className={"bg-slate-950 border py-3 rounded-lg duration-200 hover:border-blue-600 " + (scheme === goals ? 'border-blue-600' : 'border-blue-400')}
+                            key={schemeIndex} >
+                            <p className="capitalize" >{scheme.replaceAll('_', ' ')}</p >
+                        </button >
+                    )
+                })}
             </div >
         </SectionWrapper >
     )
