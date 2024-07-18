@@ -21,6 +21,17 @@ export const ExerciseCard = (props) => {
                 <h3 className="text-slate-400 text-sm" >Muscles Group</h3 >
                 <p className="capitalize" >{exercise.muscles.join(' & ')}</p >
             </div >
+
+            <div className="flex flex-col bg-slate-950 rounded gap-2">
+                {exercise.description.split('___').map((val) => {
+                    return (
+                        <div className="text-sm">
+                            {val}
+                        </div>
+                    )
+                })}
+            </div>
+
             <div className="grid grid-cols-2 sm:grid-cols-4 sm:place-items-center gap-2" >
                 {['reps', 'rest', 'tempo'].map((info, index) => (
                     <div
@@ -34,7 +45,7 @@ export const ExerciseCard = (props) => {
                 ))}
                 <button
                     onClick={handleIncrement}
-                    className="flex flex-col p-2 rounded border-[1.5] border-blue-900 duration-200 border-solid hover:border-blue-600 w-full" >
+                    className="flex flex-col p-2 rounded border-[1.5px] border-blue-900 duration-200 border-solid hover:border-blue-600 w-full" >
                     <h3 className="text-slate-400 text-sm capitalize" >
                         Sets
                     </h3 >

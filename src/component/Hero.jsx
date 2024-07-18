@@ -15,7 +15,9 @@ export const Hero = () => {
                     becoming the local <span className="text-blue-400 font-medium" >mass montrosity</span > , afflicted
                     with severe body dismophia, unable to fit through
                     doors </p >
-               <Button text={'Accept & Begin'}/>
+               <Button func={() => {
+                   window.location.href = '#generate'
+               }} text={'Accept & Begin'}/>
             </div >
         </>
     )

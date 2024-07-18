@@ -5,6 +5,7 @@ export const Workout = (props) => {
     const {workout} = props
     return (
         <SectionWrapper
+            id={'workout'}
             header={'generate your workout'}
             title={['The', 'Danger', 'zone']} >
 
