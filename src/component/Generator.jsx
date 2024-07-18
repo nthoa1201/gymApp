@@ -31,7 +31,7 @@ export const Generator = () => {
             return;
         }
 
-        if (muscles.length > 3) {
+        if (muscles.length > 2) {
             return
         }
 
@@ -41,11 +41,11 @@ export const Generator = () => {
             return;
         }
 
-        if (muscles.length === 3) {
+        setMuscles([...muscles, muscleGroup])
+        if (muscles.length === 2) {
             setShowModal(false)
         }
 
-        setMuscles([...muscles, muscleGroup])
     }
     return (
         <SectionWrapper
@@ -61,9 +61,8 @@ export const Generator = () => {
                     return (
                         <button
                             onClick={() => {
-
+                                setMuscles([])
                                 setPoison(type)
-                                console.log(type === poison ? 'border-blue-600' : 'border-blue-400')
                             }}
                             className={"bg-slate-950 border py-3 rounded-lg duration-200 hover:border-blue-600 " + (type === poison ? 'border-blue-600' : 'border-blue-400')}
                             key={typeIndex} >
@@ -81,7 +80,7 @@ export const Generator = () => {
                 <button
                     onClick={toggleModal}
                     className="relative flex p-3 items-center justify-center" >
-                    <p >Select muscle group</p >
+                    <p className="capitalize" >{muscles.length === 0 ? 'Select muscles groups' : muscles.join(' ')}</p >
                     <i className="fa-solid fa-caret-down absolute right-3 top-1/2 -translate-y-1/2" ></i >
                 </button >
                 {showModal && (
@@ -90,7 +89,7 @@ export const Generator = () => {
                             return (
                                 <button
                                     key={musclesGroupIndex}
-                                    className={"hover:text-blue-400 duration-200" + (muscles.includes(musclesGroup) ? ' text-blue-400' : '')}
+                                    className={"hover:text-blue-400 duration-200 " + (muscles.includes(musclesGroup) ? ' text-blue-400' : '')}
                                     onClick={() => {
                                         updateMuscle(musclesGroup)
                                     }} >
